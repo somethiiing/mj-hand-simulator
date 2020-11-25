@@ -24,7 +24,7 @@ class App extends React.Component {
       discard: [],
       deck: shuffle(tiles.slice(0)),
       outside: [],
-      showDebuger: true,
+      showDebuger: false,
       autoSend: 'none', //none, discard, outside
       shouldAutoSort: true,
     }
@@ -48,7 +48,7 @@ class App extends React.Component {
 
   onResetClick() {
     let newState = { hand: [], discard: [], outside: [], deck: shuffle(tiles.slice(0)) };
-    newState.hand = newState.deck.splice(0, config.handSize);
+    newState.hand = this.autoSort(newState.deck.splice(0, config.handSize));
     this.setState(newState)
   }
 
@@ -90,7 +90,7 @@ class App extends React.Component {
   }
 
   sortHand() {
-    this.setState({hand: this.autoSort(this.state.hand)});
+    this.setState({hand: sortTiles(this.state.hand)});
   }
 
   renderTiles(tiles) {
